@@ -1,0 +1,42 @@
+<polymer-element name="todo-item" attributes="item">
+	<template>
+		<style>
+			.card {
+				padding: 2em;
+				background-color: white;
+			}
+
+			paper-checkbox {
+				margin-right: 1em;
+			}
+
+			.todo-item {
+				margin-bottom: 1em;
+			}
+		</style>
+
+		<div class="todo-item" layout horizontal center>
+			<paper-checkbox checked="{{item.checked}}"
+			                on-change="{{itemUpdated}}"></paper-checkbox>
+			<paper-shadow z="2" flex>
+				<div class="card" on-click="{{cardClicked}}">
+					{{item.title}}
+					<paper-ripple fit></paper-ripple>
+				</div>
+			</paper-shadow>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			cardClicked: function() {
+				this.item.checked = !this.item.checked;
+				this.itemUpdated();
+			},
+			itemUpdated: function() {
+				this.fire('item-updated');
+			}
+		})
+	</script>
+
+</polymer-element>

@@ -1,0 +1,35 @@
+{
+  "name": "expertdays-demo",
+  "version": "1.0.0",
+  "authors": [
+    "Uri Shaked <uri@salsa4fun.co.il>"
+  ],
+  "description": "ExpertDays Livecoding Demo",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "core-drawer-panel": "polymer/core-drawer-panel#~0.5.1",
+    "core-header-panel": "polymer/core-header-panel#~0.5.1",
+    "core-menu": "polymer/core-menu#~0.5.1",
+    "core-toolbar": "polymer/core-toolbar#~0.5.1",
+    "firebase-element": "polymer/firebase-element#~0.5.1",
+    "font-roboto": "polymer/font-roboto#~0.5.1",
+    "paper-checkbox": "polymer/paper-checkbox#~0.5.1",
+    "paper-fab": "polymer/paper-fab#~0.5.1",
+    "paper-icon-button": "polymer/paper-icon-button#~0.5.1",
+    "paper-input": "polymer/paper-input#~0.5.1",
+    "paper-item": "polymer/paper-item#~0.5.1",
+    "paper-shadow": "polymer/paper-shadow#~0.5.1",
+    "platform": "Polymer/platform#>=0.4.0 <1.0.0"
+  }
+}

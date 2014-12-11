@@ -1,0 +1,118 @@
+<link rel="import" href="bower_components/core-toolbar/core-toolbar.html"/>
+<link rel="import" href="bower_components/core-header-panel/core-header-panel.html"/>
+<link rel="import" href="bower_components/core-drawer-panel/core-drawer-panel.html"/>
+<link rel="import" href="bower_components/core-icon/core-icon.html"/>
+<link rel="import" href="bower_components/paper-input/paper-input.html"/>
+<link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html"/>
+<link rel="import" href="bower_components/paper-shadow/paper-shadow.html"/>
+<link rel="import" href="bower_components/firebase-element/firebase-element.html"/>
+<link rel="import" href="bower_components/paper-fab/paper-fab.html"/>
+<link rel="import" href="bower_components/paper-ripple/paper-ripple.html"/>
+<link rel="import" href="bower_components/core-menu/core-menu.html"/>
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html"/>
+<link rel="import" href="todo-item.html"/>
+
+<polymer-element name="my-todo-list">
+	<template>
+		<style>
+			core-header-panel {
+				height: 100%;
+			}
+
+			core-toolbar {
+				background-color: #1a237e;
+				color: white;
+			}
+
+			[drawer] {
+				background-color: #aaa;
+			}
+
+			[drawer] core-toolbar {
+				background-color: #00bea4;
+			}
+
+			[content] {
+				padding: 2em;
+			}
+
+			paper-fab {
+				z-index: 15;
+				position: fixed;
+				top: 32px;
+				right: 12px;
+			}
+
+			paper-item::shadow .button-content {
+				height: auto;
+			}
+		</style>
+		<core-drawer-panel id="myDrawer">
+			<core-header-panel main>
+				<core-toolbar>
+					<core-icon icon="menu" on-click="{{openDrawer}}"></core-icon>
+					My Cool App!
+				</core-toolbar>
+
+				<div content>
+					<paper-fab icon="create" on-click="{{toggleAddNew}}"></paper-fab>
+
+					<div horizontal layout>
+						<template if="{{addingNew}}">
+							<paper-input label="New task?" flex value="{{newTodoText}}"
+							             on-change="{{createNewTodo}}">
+
+							</paper-input>
+						</template>
+					</div>
+
+					<template repeat="{{item in items}}">
+						<todo-item item="{{item}}" on-item-updated="{{saveToDB}}"></todo-item>
+					</template>
+				</div>
+			</core-header-panel>
+
+			<core-header-panel drawer>
+				<core-toolbar>
+					Settings
+				</core-toolbar>
+
+				<div content>
+					<paper-icon-button icon="delete" on-click="{{deleteSelected}}"></paper-icon-button>
+				</div>
+			</core-header-panel>
+		</core-drawer-panel>
+
+		<firebase-element id="myDB" location="https://expertmail.firebaseio.com/" data="{{items}}"
+		                  log></firebase-element>
+	</template>
+	<script>
+		Polymer({
+			items: null,
+			newTodoText: '',
+			openDrawer: function () {
+				this.$.myDrawer.togglePanel();
+			},
+			ready: function () {
+			},
+			toggleAddNew: function () {
+				this.addingNew = true;
+			},
+			saveToDB: function () {
+				this.$.myDB.commit();
+			},
+			createNewTodo: function() {
+				this.$.myDB.push({
+					title: this.newTodoText
+				});
+				this.newTodoText = '';
+				this.addingNew = false;
+			},
+			deleteSelected: function() {
+				this.items = this.items.filter(function(item) {
+					return !item.checked;
+				})
+			}
+		})
+	</script>
+</polymer-element>
